@@ -4,8 +4,6 @@
 BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 function newTmuxWindow {
-	echo "New Window $1 $2 $3 $4"
-
 	if [ -z "$4" ]; then
 		tmux new-window -a -t $1 -n $3 -c "$2/$3"
 	else
@@ -20,7 +18,6 @@ function startTmux {
 	RUNNING=$(tmux ls | cut -d":" -f1 | grep "^$SESSION$")
 
 	if [ -z "$RUNNING" ]; then
-		echo "Starting new session"
 		. $BASEDIR/projects/$PROJECT/$TICKET.sh
 	fi
 
@@ -34,12 +31,10 @@ function choose_session {
 	PS3='Please choose a session: '
 
 	options=$(find $BASEDIR/projects/$PROJECT -maxdepth 1 -type f | rev | cut -d/ -f1 | rev | cut -d. -f1)
-	echo "options: $BASEDIR/projects/$PROJECT"
 	find $BASEDIR/projects/$PROJECT -maxdepth 1 -type f
 
 	select TICKET in $options
 	do
-		echo "Starting $TICKET"
 		startTmux $PROJECT $TICKET
 		break
 	done
@@ -47,14 +42,12 @@ function choose_session {
 
 function choose_project {
 	if [ -z "$1" ]; then
-		echo "Choose project"
 		PS3='Please choose a project: '
 
 		options=$(find $BASEDIR/projects/* -maxdepth 1 -type d | xargs basename)
 
 		select PROJECT in $options
 		do
-			echo "Starting $PROJECT"
 			choose_session $PROJECT
 			break
 		done
