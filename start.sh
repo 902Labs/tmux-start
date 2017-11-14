@@ -31,7 +31,6 @@ function choose_session {
 	PS3='Please choose a session: '
 
 	options=$(find $BASEDIR/projects/$PROJECT -maxdepth 1 -type f | rev | cut -d/ -f1 | rev | cut -d. -f1)
-	find $BASEDIR/projects/$PROJECT -maxdepth 1 -type f
 
 	select TICKET in $options
 	do
