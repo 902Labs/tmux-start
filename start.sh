@@ -21,6 +21,47 @@ function startTmux {
 		. $BASEDIR/projects/$PROJECT/$TICKET.sh
 	fi
 
+	function t-vSplit {
+		SPLIT=${1:-50}
+		tmux splitw -h -p $SPLIT -c $PBASE
+	}
+
+	function t-hSplit {
+		SPLIT=${1:-50}
+		tmux splitw -v -p $SPLIT -c $PBASE
+	}
+
+	function t-left {
+		tmux select-pane -L
+	}
+
+	function t-right {
+		tmux select-pane -R
+	}
+
+	function t-window {
+		if [ -z "$2" ]; then
+			tmux new-window -a -t $SESSION -n $1 -c "$PBASE/$1"
+		else
+			tmux new-window -a -t $SESSION -n $1 -c "$PBASE$2"
+		fi
+	}
+
+	function t-rename-window {
+		tmux rename-window "$1"
+	}
+
+	if [ ! -z "$COMMANDS" ]; then
+		# START THE NEW SESSION
+		tmux new -d -s $SESSION -c $PBASE
+
+		IFS=$'\n'
+		for INSTR in $COMMANDS
+		do
+			eval $INSTR
+		done
+	fi
+
 	tmux select-window -t 0
 	tmux a -t $SESSION
 }
