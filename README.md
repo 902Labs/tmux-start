@@ -22,18 +22,17 @@ tmux-start relies on a "project" folder containing folders of projects and "tick
 ### Example script:
 ```
 PBASE=~/clients/cool-company
-COMMANDS="\
+COMMANDS="
 	t-rename-window \"Sandbox\"
 	t-window \"Kubernetes\" /
-	t-vSplit
-	t-left
-	t-hSplit
+	t-vSplit; t-left; t-hSplit
 	t-window ui-project1
 	t-window ui-project2
-	t-window service-cart \
+	t-window service-cart
 "
 ```
 
 
 - The config is read by line breaks
+- You can group commands on one line seperated by `;` for organization
 - This is my second itteration, the goal is to remove as much as possible from this file making it as short and easy to config/maintain as possible
