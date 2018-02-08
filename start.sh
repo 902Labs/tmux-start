@@ -23,12 +23,12 @@ function startTmux {
 
 	function t-vSplit {
 		SPLIT=${1:-50}
-		tmux splitw -h -p $SPLIT -c $PBASE
+		tmux split-window -h -p $SPLIT -c $PBASE
 	}
 
 	function t-hSplit {
 		SPLIT=${1:-50}
-		tmux splitw -v -p $SPLIT -c $PBASE
+		tmux split-window -v -p $SPLIT -c $PBASE
 	}
 
 	function t-left {
