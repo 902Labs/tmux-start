@@ -21,6 +21,10 @@ function startTmux {
 		. $BASEDIR/projects/$PROJECT/$TICKET.sh
 	fi
 
+	function tiled {
+		tmux select-layout tiled
+	}
+
 	function t-vSplit {
 		SPLIT=${1:-50}
 		tmux split-window -h -p $SPLIT -c $PBASE
