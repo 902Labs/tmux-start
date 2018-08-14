@@ -76,12 +76,19 @@ function choose_session {
 	PS3='Please choose a session: '
 
 	options=$(find $BASEDIR/projects/$PROJECT -maxdepth 1 -type f | rev | cut -d/ -f1 | rev | cut -d. -f1)
+	optionCount=$(echo $options | grep -o ' ' | wc -l | xargs)
 
-	select TICKET in $options
-	do
-		startTmux $PROJECT $TICKET
-		break
-	done
+	if [ "$optionCount" == "0" ]; then
+		echo "starting $options"
+		startTmux $PROJECT $options
+	else
+		select TICKET in $options
+		do
+			echo "starting $TICKET"
+			startTmux $PROJECT $TICKET
+			break
+		done
+	fi
 }
 
 function choose_project {
