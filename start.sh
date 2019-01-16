@@ -75,7 +75,7 @@ function choose_session {
 	PROJECT=$1
 	PS3='Please choose a session: '
 
-	options=$(find $BASEDIR/projects/$PROJECT -maxdepth 1 -type f | rev | cut -d/ -f1 | rev | cut -d. -f1)
+	options=$(find $BASEDIR/projects/$PROJECT -maxdepth 1 -type f | sort -f | rev | cut -d/ -f1 | rev | cut -d. -f1)
 	optionCount=$(echo $options | grep -o ' ' | wc -l | xargs)
 
 	if [ "$optionCount" == "0" ]; then
@@ -95,7 +95,7 @@ function choose_project {
 	if [ -z "$1" ]; then
 		PS3='Please choose a project: '
 
-		options=$(find $BASEDIR/projects/* -maxdepth 1 -type d | xargs basename)
+		options=$(find $BASEDIR/projects/* -maxdepth 1 -type d | sort -f | xargs basename)
 
 		select PROJECT in $options
 		do
